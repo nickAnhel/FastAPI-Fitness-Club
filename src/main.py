@@ -4,6 +4,7 @@ from fastapi import FastAPI
 
 from config.project_config import settings
 from models.base_model import create_tables, delete_tables
+from routes import get_routers
 
 
 @asynccontextmanager
@@ -21,6 +22,9 @@ def get_application() -> FastAPI:
         description=settings.DESCRIPTION,
         lifespan=lifespan,
     )
+
+    for router in get_routers():
+        application.include_router(router)
 
     return application
 
