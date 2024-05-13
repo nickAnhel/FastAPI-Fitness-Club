@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
 from config.database.db import session_factory
-from models.models import ServiceModel, ServiceTypes
+from models.models import ServiceModel, ServiceType
 from schemas.service_schema import ServiceCreate
 from .base_repository import BaseRepository
 
@@ -11,7 +11,7 @@ from .base_repository import BaseRepository
 class ServiceRepository(BaseRepository):
     def create_all(self) -> None:
         with self._session_factory() as session:
-            for service_type in ServiceTypes:
+            for service_type in ServiceType:
                 service = ServiceModel(service_type=service_type)
                 session.add(service)
             session.commit()

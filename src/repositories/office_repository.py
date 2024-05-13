@@ -1,22 +1,25 @@
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 
 from config.database.db import session_factory
-from models.models import OfficeModel
+from models.models import OfficeModel, ServiceModel, ServiceType
+from schemas.office_schema import OfficeCreate, OfficeUpdate
 from .base_repository import BaseRepository
 
 
 class OfficeRepository(BaseRepository):
-    def create(self, data):
+    def create(self, data: OfficeCreate):
         with self._session_factory() as session:
-            office = OfficeModel(**data)
+            office = OfficeModel(**data.model_dump())
             session.add(office)
             session.commit()
             session.refresh(office)
+            print(office)
             return office
 
     def get_all(
         self,
+        *,
         order: str = "id",
         limit: int = 100,
         offset: int = 0,
@@ -44,19 +47,27 @@ class OfficeRepository(BaseRepository):
             office = session.execute(query).scalar_one()
             return office
 
-    def update(self, data, **filters):
-        pass
-        # with self._session_factory() as session:
-        #     query = (
-        #         select(Service)
-        #         .filter_by(service_type=service_type)
-        #         .options(selectinload(Service.offices))
-        #     )
-        #     service = session.execute(query).scalar()
+    def update(self, data: OfficeUpdate, **filters):
+        with self._session_factory() as session:
+            stmt = update(OfficeModel).values(data.model_dump()).filter_by(**filters).returning(OfficeModel)
+            office = session.execute(stmt).scalar_one()
+            session.commit()
+            session.refresh(office)
+            return office
 
-        #     office = session.query(Office).filter_by(id=office_id).scalar()
-        #     office.services.append(service)  # type: ignore
-        #     session.commit()
+    def add_service(self, service_type: ServiceType, **filters):
+        with self._session_factory() as session:
+            query = (
+                select(ServiceModel).filter_by(service_type=service_type)
+                # .options(selectinload(ServiceModel.offices))
+            )
+            service = session.execute(query).scalar_one()
+
+            office = session.query(OfficeModel).filter_by(**filters).options(selectinload(OfficeModel.services)).one()
+            office.services.append(service)  # type: ignore
+            session.commit()
+            session.refresh(office)
+            return office
 
     def delete(self, **filters):
         with self._session_factory() as session:

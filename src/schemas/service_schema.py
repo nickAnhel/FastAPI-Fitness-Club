@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from models.models import ServiceTypes
+from models.models import ServiceType
 
 
 class ServiceBase(BaseModel):
@@ -9,7 +9,7 @@ class ServiceBase(BaseModel):
 
 
 class ServiceCreate(ServiceBase):
-    service_type: ServiceTypes
+    service_type: ServiceType
 
 
 class ServiceGet(ServiceCreate):
