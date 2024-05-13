@@ -1,4 +1,5 @@
 from schemas.service_schema import ServiceGet
+from schemas.membership_schema import MembershipGet
 from .base_schema import BaseChema
 
 
@@ -13,6 +14,10 @@ class OfficeGet(OfficeCreate):
 
 class OfficeGetWithServices(OfficeGet):
     services: list[ServiceGet] = []
+
+
+class OfficeGetWithAllRelations(OfficeGetWithServices):
+    memberships: list[MembershipGet] = []
 
 
 class OfficeUpdate(BaseChema):
