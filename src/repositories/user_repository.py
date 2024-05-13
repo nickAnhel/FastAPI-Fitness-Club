@@ -1,3 +1,4 @@
+from typing import Sequence
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 
@@ -8,7 +9,7 @@ from .base_repository import BaseRepository
 
 
 class UserRepository(BaseRepository):
-    def create(self, data: UserCreate):
+    def create(self, data: UserCreate) -> UserModel:
         with self._session_factory() as session:
             user = UserModel(**data.model_dump())
             session.add(user)
@@ -22,7 +23,7 @@ class UserRepository(BaseRepository):
         order: str = "id",
         limit: int = 100,
         offset: int = 0,
-    ):
+    ) -> Sequence[UserModel]:
         with self._session_factory() as session:
             query = (
                 select(UserModel)
@@ -34,13 +35,13 @@ class UserRepository(BaseRepository):
             users = session.execute(query).scalars().all()
             return users
 
-    def get_single(self, **fiters):
+    def get_single(self, **fiters) -> UserModel:
         with self._session_factory() as session:
             query = select(UserModel).filter_by(**fiters).options(selectinload(UserModel.memberships))
             user = session.execute(query).scalar_one()
             return user
 
-    def update(self, data: UserUpdate, **filters):
+    def update(self, data: UserUpdate, **filters) -> UserModel:
         with self._session_factory() as session:
             stmt = update(UserModel).values(data.model_dump()).filter_by(**filters).returning(UserModel)
             user = session.execute(stmt).scalar_one()
@@ -48,7 +49,7 @@ class UserRepository(BaseRepository):
             session.refresh(user)
             return user
 
-    def delete(self, **filters):
+    def delete(self, **filters) -> None:
         with self._session_factory() as session:
             user = session.query(UserModel).filter_by(**filters).first()
             session.delete(user)

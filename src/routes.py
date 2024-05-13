@@ -1,16 +1,17 @@
 from fastapi import APIRouter
+
 from controllers import (
-    memberships,
-    offices,
-    services,
-    users,
+    membership_controllers,
+    office_controllers,
+    service_controllers,
+    user_controllers,
 )
 
 
 def get_routers() -> list[APIRouter]:
     return [
-        memberships.router,
-        offices.router,
-        services.router,
-        users.router,
+        membership_controllers.router,
+        office_controllers.router,
+        service_controllers.router,
+        user_controllers.router,
     ]
