@@ -14,7 +14,6 @@ class OfficeRepository(BaseRepository):
             session.add(office)
             session.commit()
             session.refresh(office)
-            print(office)
             return office
 
     def get_all(
@@ -63,7 +62,12 @@ class OfficeRepository(BaseRepository):
             )
             service = session.execute(query).scalar_one()
 
-            office = session.query(OfficeModel).filter_by(**filters).options(selectinload(OfficeModel.services)).one()
+            office = (
+                session.query(OfficeModel)
+                .filter_by(**filters)
+                .options(selectinload(OfficeModel.services))
+                .one()
+            )
             office.services.append(service)  # type: ignore
             session.commit()
             session.refresh(office)

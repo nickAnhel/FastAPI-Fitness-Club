@@ -11,14 +11,6 @@ class UserModel(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    created_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=func.now(),  # type: ignore
-    )
-    updated_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=func.now(),  # type: ignore
-        server_onupdate=func.now(),  # type: ignore
-    )
-
     first_name: Mapped[str] = mapped_column(String(50))
     last_name: Mapped[str] = mapped_column(String(50))
     email: Mapped[str] = mapped_column(unique=True)
@@ -27,6 +19,14 @@ class UserModel(Base):
     memberships: Mapped[list["MembershipModel"]] = relationship(  # type: ignore
         back_populates="user",
         cascade="all, delete",
+    )
+
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        server_default=func.now(),  # type: ignore
+    )
+    updated_at: Mapped[datetime.datetime] = mapped_column(
+        server_default=func.now(),  # type: ignore
+        server_onupdate=func.now(),  # type: ignore
     )
 
 
@@ -42,7 +42,7 @@ class ServiceModel(Base):
     __tablename__ = "services"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    
+
     service_type: Mapped[ServiceType]
 
     offices: Mapped[list["OfficeModel"]] = relationship(  # type: ignore

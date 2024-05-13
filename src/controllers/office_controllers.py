@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from services.office_service import office_service
-from schemas.office_schema import OfficeCreate, OfficeGet, OfficeGetWithAllRelations
+from schemas.office_schema import OfficeCreate, OfficeGet, OfficeGetWithServices, OfficeGetWithAllRelations
 from schemas.status_schema import Status
 from models.models import ServiceType
 
@@ -35,7 +35,7 @@ def change_office_phone_number(pk: int, phone_number: str) -> OfficeGet:
 
 
 @router.put("/{pk}/add-service")
-def add_service_to_office(pk: int, service_type: ServiceType) -> OfficeGetWithAllRelations:
+def add_service_to_office(pk: int, service_type: ServiceType) -> OfficeGetWithServices:
     return office_service.add_service_to_office(pk=pk, service_type=service_type)
 
 

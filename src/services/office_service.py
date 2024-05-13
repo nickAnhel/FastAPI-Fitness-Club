@@ -1,6 +1,6 @@
 from models.models import ServiceType
 from repositories.office_repository import office_repository
-from schemas.office_schema import OfficeCreate, OfficeGet, OfficeUpdatePhoneNumber, OfficeGetWithAllRelations
+from schemas.office_schema import OfficeCreate, OfficeGet, OfficeUpdatePhoneNumber, OfficeGetWithServices, OfficeGetWithAllRelations
 
 
 class OfficeService:
@@ -30,8 +30,8 @@ class OfficeService:
             office_repository.update(data=OfficeUpdatePhoneNumber(phone_number=phone_number), id=pk)
         )
 
-    def add_service_to_office(self, pk: int, service_type: ServiceType) -> OfficeGetWithAllRelations:
-        return OfficeGetWithAllRelations.model_validate(office_repository.add_service(service_type=service_type, id=pk))
+    def add_service_to_office(self, pk: int, service_type: ServiceType) -> OfficeGetWithServices:
+        return OfficeGetWithServices.model_validate(office_repository.add_service(service_type=service_type, id=pk))
 
     def delete_office_by_id(self, pk: int) -> None:
         office_repository.delete(id=pk)
