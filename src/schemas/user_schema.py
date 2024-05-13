@@ -1,4 +1,5 @@
 from .base_schema import BaseChema
+from .membership_schema import MembershipGet
 
 
 class UserCreate(BaseChema):
@@ -10,6 +11,10 @@ class UserCreate(BaseChema):
 
 class UserGet(UserCreate):
     id: int
+
+
+class UserGetWithMemberships(UserGet):
+    memberships: list[MembershipGet]
 
 
 class UserUpdate(BaseChema):

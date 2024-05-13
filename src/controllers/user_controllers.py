@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from services.user_service import user_service
-from schemas.user_schema import UserCreate, UserGet
+from schemas.user_schema import UserCreate, UserGet, UserGetWithMemberships
 from schemas.status_schema import Status
 
 
@@ -9,7 +9,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/")
-def get_users(order: str = "id", limit: int = 100, offset: int = 0) -> list[UserGet]:
+def get_users(order: str = "id", limit: int = 100, offset: int = 0) -> list[UserGetWithMemberships]:
     try:
         return user_service.get_users(order=order, limit=limit, offset=offset)
     except Exception as e:
@@ -17,7 +17,7 @@ def get_users(order: str = "id", limit: int = 100, offset: int = 0) -> list[User
 
 
 @router.get("/user/{pk}")
-def get_user_by_id(pk: int) -> UserGet:
+def get_user_by_id(pk: int) -> UserGetWithMemberships:
     try:
         return user_service.get_user_by_id(pk=pk)
     except Exception as e:
@@ -25,7 +25,7 @@ def get_user_by_id(pk: int) -> UserGet:
 
 
 @router.get("/user")
-def get_user_by_email(email: str) -> UserGet:
+def get_user_by_email(email: str) -> UserGetWithMemberships:
     try:
         return user_service.get_user_by_email(email=email)
     except Exception as e:
@@ -41,7 +41,7 @@ def create_user(data: UserCreate) -> UserGet:
 
 
 @router.put("/{pk}/change/email")
-def change_user_email(pk: int, email: str) -> UserGet:
+def change_user_email(pk: int, email: str) -> UserGetWithMemberships:
     try:
         return user_service.change_user_email(pk=pk, email=email)
     except Exception as e:
@@ -49,7 +49,7 @@ def change_user_email(pk: int, email: str) -> UserGet:
 
 
 @router.put("/{pk}/change/phone-number")
-def change_user_phone_number(pk: int, phone_number: str) -> UserGet:
+def change_user_phone_number(pk: int, phone_number: str) -> UserGetWithMemberships:
     try:
         return user_service.change_user_phone_number(pk=pk, phone_number=phone_number)
     except Exception as e:
