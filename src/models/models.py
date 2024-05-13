@@ -8,6 +8,7 @@ from .base_model import Base
 
 class UserModel(Base):
     __tablename__ = "users"
+
     id: Mapped[int] = mapped_column(primary_key=True)
 
     created_at: Mapped[datetime.datetime] = mapped_column(
@@ -17,7 +18,6 @@ class UserModel(Base):
         server_default=func.now(),  # type: ignore
         server_onupdate=func.now(),  # type: ignore
     )
-
 
     first_name: Mapped[str] = mapped_column(String(50))
     last_name: Mapped[str] = mapped_column(String(50))
@@ -42,6 +42,7 @@ class ServiceModel(Base):
     __tablename__ = "services"
 
     id: Mapped[int] = mapped_column(primary_key=True)
+    
     service_type: Mapped[ServiceType]
 
     offices: Mapped[list["OfficeModel"]] = relationship(  # type: ignore

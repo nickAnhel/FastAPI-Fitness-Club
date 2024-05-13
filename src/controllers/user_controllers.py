@@ -25,7 +25,7 @@ def get_user_by_id(pk: int) -> UserGet:
 
 
 @router.get("/user")
-def get_user_by_email(email: str)-> UserGet:
+def get_user_by_email(email: str) -> UserGet:
     try:
         return user_service.get_user_by_email(email=email)
     except Exception as e:
@@ -41,7 +41,7 @@ def create_user(data: UserCreate) -> UserGet:
 
 
 @router.put("/{pk}/change/email")
-def change_user_email(pk: int, email: str)-> UserGet:
+def change_user_email(pk: int, email: str) -> UserGet:
     try:
         return user_service.change_user_email(pk=pk, email=email)
     except Exception as e:
@@ -49,7 +49,7 @@ def change_user_email(pk: int, email: str)-> UserGet:
 
 
 @router.put("/{pk}/change/phone-number")
-def change_user_phone_number(pk: int, phone_number: str)-> UserGet:
+def change_user_phone_number(pk: int, phone_number: str) -> UserGet:
     try:
         return user_service.change_user_phone_number(pk=pk, phone_number=phone_number)
     except Exception as e:

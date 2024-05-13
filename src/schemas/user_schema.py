@@ -1,12 +1,7 @@
-from pydantic import BaseModel
+from .base_schema import BaseChema
 
 
-class UserBase(BaseModel):
-    class Config:
-        from_attributes = True
-
-
-class UserCreate(UserBase):
+class UserCreate(BaseChema):
     first_name: str
     last_name: str
     email: str
@@ -17,7 +12,7 @@ class UserGet(UserCreate):
     id: int
 
 
-class UserUpdate(UserBase):
+class UserUpdate(BaseChema):
     pass
 
 

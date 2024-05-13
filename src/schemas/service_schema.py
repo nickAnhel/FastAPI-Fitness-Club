@@ -1,14 +1,8 @@
-from pydantic import BaseModel
-
 from models.models import ServiceType
+from .base_schema import BaseChema
 
 
-class ServiceBase(BaseModel):
-    class Config:
-        from_attributes = True
-
-
-class ServiceCreate(ServiceBase):
+class ServiceCreate(BaseChema):
     service_type: ServiceType
 
 

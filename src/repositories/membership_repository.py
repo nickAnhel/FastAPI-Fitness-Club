@@ -1,15 +1,17 @@
+from typing import Sequence
 from sqlalchemy import select, delete
 from sqlalchemy.orm import joinedload
 
 from config.database.db import session_factory
 from models.models import MembershipModel
+from schemas.membership_schema import MembershipCreate
 from .base_repository import BaseRepository
 
 
 class MembershipRepository(BaseRepository):
-    def create(self, data):
+    def create(self, data: MembershipCreate) -> MembershipModel:
         with self._session_factory() as session:
-            membersip = MembershipModel(**data)
+            membersip = MembershipModel(**data.model_dump())
             session.add(membersip)
             session.commit()
             session.refresh(membersip)
@@ -20,7 +22,7 @@ class MembershipRepository(BaseRepository):
         order: str = "id",
         limit: int = 100,
         offset: int = 0,
-    ):
+    ) -> Sequence[MembershipModel]:
         with self._session_factory() as session:
             query = (
                 select(MembershipModel)
@@ -33,7 +35,7 @@ class MembershipRepository(BaseRepository):
             membersips = session.execute(query).scalars().all()
             return membersips
 
-    def get_single(self, **filters):
+    def get_single(self, **filters) -> MembershipModel:
         with self._session_factory() as session:
             query = (
                 select(MembershipModel)
@@ -44,7 +46,7 @@ class MembershipRepository(BaseRepository):
             membersip = session.execute(query).unique().scalar_one()
             return membersip
 
-    def delete(self, **filters):
+    def delete(self, **filters) -> None:
         with self._session_factory() as session:
             stmt = delete(MembershipModel).filter_by(**filters)
             session.execute(stmt)

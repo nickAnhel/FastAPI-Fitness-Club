@@ -1,14 +1,8 @@
-from pydantic import BaseModel
-
 from schemas.service_schema import ServiceGet
+from .base_schema import BaseChema
 
 
-class OfficeBase(BaseModel):
-    class Config:
-        from_attributes = True
-
-
-class OfficeCreate(OfficeBase):
+class OfficeCreate(BaseChema):
     address: str
     phone_number: str
 
@@ -21,9 +15,8 @@ class OfficeGetWithServices(OfficeGet):
     services: list[ServiceGet] = []
 
 
-class OfficeUpdate(BaseModel):
-    class Config:
-        from_attributes = True
+class OfficeUpdate(BaseChema):
+    pass
 
 
 class OfficeUpdatePhoneNumber(OfficeUpdate):
