@@ -1,54 +1,65 @@
 from fastapi import APIRouter, HTTPException
 
-from repositories.user_repository import user_repository
-from schemas.user_schema import UserCreate
+from services.user_service import user_service
+from schemas.user_schema import UserCreate, UserGet
+from schemas.status_schema import Status
 
 
 router = APIRouter(prefix="/users", tags=["users"])
 
 
 @router.get("/")
-def get_users():
+def get_users(order: str = "id", limit: int = 100, offset: int = 0) -> list[UserGet]:
     try:
-        return user_repository.get_all()
+        return user_service.get_users(order=order, limit=limit, offset=offset)
     except Exception as e:
-        return HTTPException(status_code=500, detail=str(e))
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore
 
 
-@router.get("/{pk}")
-def get_user(pk: int):
+@router.get("/user/{pk}")
+def get_user_by_id(pk: int) -> UserGet:
     try:
-        return user_repository.get_single(id=pk)
+        return user_service.get_user_by_id(pk=pk)
     except Exception as e:
-        return HTTPException(status_code=500, detail=str(e))
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore
+
+
+@router.get("/user")
+def get_user_by_email(email: str)-> UserGet:
+    try:
+        return user_service.get_user_by_email(email=email)
+    except Exception as e:
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore
 
 
 @router.post("/create")
-def create_user(data: UserCreate):
+def create_user(data: UserCreate) -> UserGet:
     try:
-        return user_repository.create(data.model_dump())
+        return user_service.create_user(data)
     except Exception as e:
-        return HTTPException(status_code=500, detail=str(e))
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore
 
 
 @router.put("/{pk}/change/email")
-def change_user_email(pk: int, email: str):
+def change_user_email(pk: int, email: str)-> UserGet:
     try:
-        return user_repository.update(data={"email": email}, id=pk)
+        return user_service.change_user_email(pk=pk, email=email)
     except Exception as e:
-        return HTTPException(status_code=500, detail=str(e))
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore
+
 
 @router.put("/{pk}/change/phone-number")
-def change_user_phone_number(pk: int, phone_number: str):
+def change_user_phone_number(pk: int, phone_number: str)-> UserGet:
     try:
-        return user_repository.update(data={"email": phone_number}, id=pk)
+        return user_service.change_user_phone_number(pk=pk, phone_number=phone_number)
     except Exception as e:
-        return HTTPException(status_code=500, detail=str(e))
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore
 
 
 @router.delete("/{pk}/delete")
-def delete_user(pk: int):
+def delete_user(pk: int) -> Status:
     try:
-        return user_repository.delete(id=pk)
+        user_service.delete_user_by_id(pk=pk)
+        return Status(code=200, message="User deleted successfully")
     except Exception as e:
-        return HTTPException(status_code=500, detail=str(e))
+        return HTTPException(status_code=500, detail=str(e))  # type: ignore

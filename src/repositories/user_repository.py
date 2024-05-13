@@ -3,13 +3,14 @@ from sqlalchemy.orm import selectinload
 
 from config.database.db import session_factory
 from models.models import UserModel
+from schemas.user_schema import UserCreate, UserUpdate
 from .base_repository import BaseRepository
 
 
 class UserRepository(BaseRepository):
-    def create(self, data):
+    def create(self, data: UserCreate):
         with self._session_factory() as session:
-            user = UserModel(**data)
+            user = UserModel(**data.model_dump())
             session.add(user)
             session.commit()
             session.refresh(user)
@@ -17,6 +18,7 @@ class UserRepository(BaseRepository):
 
     def get_all(
         self,
+        *,
         order: str = "id",
         limit: int = 100,
         offset: int = 0,
@@ -38,12 +40,12 @@ class UserRepository(BaseRepository):
             user = session.execute(query).scalar_one()
             return user
 
-    def update(self, data, **filters):
+    def update(self, data: UserUpdate, **filters):
         with self._session_factory() as session:
-            stmt = update(UserModel).values(**data).filter_by(**filters).returning(UserModel)
+            stmt = update(UserModel).values(data.model_dump()).filter_by(**filters).returning(UserModel)
             user = session.execute(stmt).scalar_one()
-            session.flush()
             session.commit()
+            session.refresh(user)
             return user
 
     def delete(self, **filters):

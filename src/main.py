@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 
 from config.project_config import settings
 from models.base_model import create_tables, delete_tables
@@ -30,6 +31,11 @@ def get_application() -> FastAPI:
 
 
 app: FastAPI = get_application()
+
+
+@app.get("/")
+def root():
+    return RedirectResponse("/docs")
 
 
 if __name__ == "__main__":

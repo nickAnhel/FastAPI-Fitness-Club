@@ -1,15 +1,29 @@
 from pydantic import BaseModel
 
 
-class UserCreate(BaseModel):
+class UserBase(BaseModel):
+    class Config:
+        from_attributes = True
+
+
+class UserCreate(UserBase):
     first_name: str
     last_name: str
     email: str
     phone_number: str | None = None
 
-    class Config:
-        from_attributes = True
-
 
 class UserGet(UserCreate):
     id: int
+
+
+class UserUpdate(UserBase):
+    pass
+
+
+class UserUpdateEmail(UserUpdate):
+    email: str
+
+
+class UserUpdatePhoneNumber(UserUpdate):
+    phone_number: str
