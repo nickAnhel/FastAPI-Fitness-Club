@@ -1,6 +1,6 @@
 import datetime
 import enum
-from sqlalchemy import ForeignKey, String
+from sqlalchemy import ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base_model import Base
@@ -8,6 +8,16 @@ from .base_model import Base
 
 class UserModel(Base):
     __tablename__ = "users"
+    id: Mapped[int] = mapped_column(primary_key=True)
+
+    created_at: Mapped[datetime.datetime] = mapped_column(
+        server_default=func.now(),  # type: ignore
+    )
+    updated_at: Mapped[datetime.datetime] = mapped_column(
+        server_default=func.now(),  # type: ignore
+        server_onupdate=func.now(),  # type: ignore
+    )
+
 
     first_name: Mapped[str] = mapped_column(String(50))
     last_name: Mapped[str] = mapped_column(String(50))
@@ -20,7 +30,7 @@ class UserModel(Base):
     )
 
 
-class ServiceTypes(enum.StrEnum):
+class ServiceType(enum.StrEnum):
     GYM = "Gym"
     POOL = "Pool"
     SAUNA = "Sauna"
@@ -32,7 +42,7 @@ class ServiceModel(Base):
     __tablename__ = "services"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    service_type: Mapped[ServiceTypes]
+    service_type: Mapped[ServiceType]
 
     offices: Mapped[list["OfficeModel"]] = relationship(  # type: ignore
         back_populates="services",
@@ -42,6 +52,8 @@ class ServiceModel(Base):
 
 class OfficeModel(Base):
     __tablename__ = "offices"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     address: Mapped[str] = mapped_column(unique=True)
     phone_number: Mapped[str]
