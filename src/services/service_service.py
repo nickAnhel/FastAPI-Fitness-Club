@@ -1,15 +1,15 @@
 from repositories.service_repository import service_repository
 from schemas.service_schema import ServiceCreate, ServiceGet
+from .base_service import BaseService
 
-
-class ServiceService:
-    def create_all_services(self) -> None:
+class ServiceService(BaseService):
+    def create_all(self) -> None:
         service_repository.create_all()
 
-    def create_service(self, data: ServiceCreate) -> ServiceGet:
+    def create(self, data: ServiceCreate) -> ServiceGet:
         return ServiceGet.model_validate(service_repository.create(data))
 
-    def get_services(
+    def get_all(
         self,
         *,
         order: str = "id",
@@ -21,10 +21,10 @@ class ServiceService:
             for service in service_repository.get_all(order=order, limit=limit, offset=offset)
         ]
 
-    def get_service_by_id(self, pk: int) -> ServiceGet:
+    def get_by_id(self, pk: int) -> ServiceGet:
         return ServiceGet.model_validate(service_repository.get_single(id=pk))
 
-    def delete_service_by_id(self, pk: int) -> None:
+    def delete_by_id(self, pk: int) -> None:
         service_repository.delete(id=pk)
 
 

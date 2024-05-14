@@ -1,12 +1,12 @@
 from repositories.membership_repository import membership_repository
 from schemas.membership_schema import MembershipCreate, MembershipGet
+from .base_service import BaseService
 
-
-class MembershipService:
-    def create_membership(self, data: MembershipCreate) -> MembershipGet:
+class MembershipService(BaseService):
+    def create(self, data: MembershipCreate) -> MembershipGet:
         return MembershipGet.model_validate(membership_repository.create(data=data))
 
-    def get_memberships(
+    def get_all(
         self,
         *,
         order: str = "id",
@@ -18,10 +18,10 @@ class MembershipService:
             for membership in membership_repository.get_all(order=order, limit=limit, offset=offset)
         ]
 
-    def get_membership_by_id(self, pk: int) -> MembershipGet:
+    def get_by_id(self, pk: int) -> MembershipGet:
         return MembershipGet.model_validate(membership_repository.get_single(id=pk))
 
-    def delete_membership_by_id(self, pk: int) -> None:
+    def delete_by_id(self, pk: int) -> None:
         membership_repository.delete(id=pk)
 
 
