@@ -1,4 +1,4 @@
-from models.models import ServiceType
+from ..models.models import ServiceType
 from .base_schema import BaseChema
 
 

@@ -1,11 +1,10 @@
 from contextlib import asynccontextmanager
-import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 
-from config.project_config import settings
-from models.base_model import create_tables, delete_tables
-from routes import get_routers
+from .config.project_config import settings
+from .models.base_model import create_tables, delete_tables
+from .routes import get_routers
 
 
 @asynccontextmanager
@@ -36,7 +35,3 @@ app: FastAPI = get_application()
 @app.get("/")
 def root():
     return RedirectResponse("/docs")
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8080, reload=True)

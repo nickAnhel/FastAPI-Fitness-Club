@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 
-from services.office_service import office_service
-from schemas.office_schema import OfficeCreate, OfficeGet, OfficeGetWithServices, OfficeGetWithAllRelations
-from schemas.status_schema import Status
-from models.models import ServiceType
+from ..services.office_service import office_service
+from ..schemas.office_schema import OfficeCreate, OfficeGet, OfficeGetWithServices, OfficeGetWithAllRelations
+from ..schemas.status_schema import Status
+from ..models.models import ServiceType
 
 
 router = APIRouter(prefix="/offices", tags=["offices"])

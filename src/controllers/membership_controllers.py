@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from services.membership_service import membership_service
-from schemas.membership_schema import MembershipCreate, MembershipGet
-from schemas.status_schema import Status
+from ..services.membership_service import membership_service
+from ..schemas.membership_schema import MembershipCreate, MembershipGet
+from ..schemas.status_schema import Status
 
 router = APIRouter(prefix="/memberships", tags=["memberships"])
 

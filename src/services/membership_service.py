@@ -1,5 +1,5 @@
-from repositories.membership_repository import membership_repository
-from schemas.membership_schema import MembershipCreate, MembershipGet
+from ..repositories.membership_repository import membership_repository
+from ..schemas.membership_schema import MembershipCreate, MembershipGet
 from .base_service import BaseService
 
 class MembershipService(BaseService):

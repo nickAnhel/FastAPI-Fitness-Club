@@ -1,5 +1,5 @@
-from repositories.service_repository import service_repository
-from schemas.service_schema import ServiceCreate, ServiceGet
+from ..repositories.service_repository import service_repository
+from ..schemas.service_schema import ServiceCreate, ServiceGet
 from .base_service import BaseService
 
 class ServiceService(BaseService):

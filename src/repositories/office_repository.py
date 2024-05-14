@@ -1,9 +1,9 @@
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 
-from config.db_config import session_factory
-from models.models import OfficeModel, ServiceModel, ServiceType
-from schemas.office_schema import OfficeCreate, OfficeUpdate
+from ..config.db_config import session_factory
+from ..models.models import OfficeModel, ServiceModel, ServiceType
+from ..schemas.office_schema import OfficeCreate, OfficeUpdate
 from .base_repository import BaseRepository
 
 

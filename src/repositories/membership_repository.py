@@ -2,9 +2,9 @@ from typing import Sequence
 from sqlalchemy import select, delete
 from sqlalchemy.orm import joinedload
 
-from config.db_config import session_factory
-from models.models import MembershipModel
-from schemas.membership_schema import MembershipCreate
+from ..config.db_config import session_factory
+from ..models.models import MembershipModel
+from ..schemas.membership_schema import MembershipCreate
 from .base_repository import BaseRepository
 
 

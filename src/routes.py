@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from controllers import (
+from .controllers import (
     membership_controllers,
     office_controllers,
     service_controllers,

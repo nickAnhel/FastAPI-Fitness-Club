@@ -1,7 +1,7 @@
 import datetime
 from sqlalchemy.orm import DeclarativeBase
 
-from config.db_config import engine
+from ..config.db_config import engine
 
 
 class Base(DeclarativeBase):

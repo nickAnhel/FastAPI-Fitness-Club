@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-from services.service_service import service_service
-from schemas.status_schema import Status
-from schemas.service_schema import ServiceCreate, ServiceGet
+from ..services.service_service import service_service
+from ..schemas.status_schema import Status
+from ..schemas.service_schema import ServiceCreate, ServiceGet
 
 
 router = APIRouter(prefix="/services", tags=["services"])
