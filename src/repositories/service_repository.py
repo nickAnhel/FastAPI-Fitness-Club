@@ -2,7 +2,7 @@ from typing import Sequence
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from config.database.db import session_factory
+from config.db_config import session_factory
 from models.models import ServiceModel, ServiceType
 from schemas.service_schema import ServiceCreate
 from .base_repository import BaseRepository

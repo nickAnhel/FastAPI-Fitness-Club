@@ -2,7 +2,7 @@ from typing import Sequence
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 
-from config.database.db import session_factory
+from config.db_config import session_factory
 from models.models import UserModel
 from schemas.user_schema import UserCreate, UserUpdate
 from .base_repository import BaseRepository

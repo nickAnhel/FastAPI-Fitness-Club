@@ -1,7 +1,7 @@
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload
 
-from config.database.db import session_factory
+from config.db_config import session_factory
 from models.models import OfficeModel, ServiceModel, ServiceType
 from schemas.office_schema import OfficeCreate, OfficeUpdate
 from .base_repository import BaseRepository
