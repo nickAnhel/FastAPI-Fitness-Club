@@ -1,3 +1,5 @@
+from pydantic import Field
+
 from .base_schema import BaseChema
 from .membership_schema import MembershipGet
 
@@ -5,8 +7,8 @@ from .membership_schema import MembershipGet
 class UserCreate(BaseChema):
     first_name: str
     last_name: str
-    email: str
-    phone_number: str | None = None
+    email: str = Field(pattern=r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
+    phone_number: str | None = Field(default=None, pattern=r"^[+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$")
 
 
 class UserGet(UserCreate):
