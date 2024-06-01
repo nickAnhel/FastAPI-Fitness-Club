@@ -72,13 +72,12 @@ def add_services_offices():
 def create_memberships():
     for user_id in range(1, 11):
         office_id = random.randint(1, 5)
-        start_date = datetime.datetime.now() + datetime.timedelta(days=random.randint(1, 30))
-        end_date = start_date + datetime.timedelta(days=random.choice([30, 90, 365]))
+        start_date = datetime.date.today() + datetime.timedelta(days=random.randint(0, 30))
         data = {}
         data["user_id"] = user_id
         data["office_id"] = office_id
         data["start_date"] = str(start_date)
-        data["end_date"] = str(end_date)
+        data["period"] = random.choice([30, 90, 180, 365])
         # print(data)
         print(
             requests.post("http://127.0.0.1:8080/memberships/create", json=data).json()

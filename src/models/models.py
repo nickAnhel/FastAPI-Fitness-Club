@@ -97,4 +97,4 @@ class MembershipModel(Base):
     )
 
     start_date: Mapped[datetime.datetime]
-    end_date: Mapped[datetime.datetime]
+    period: Mapped[int]

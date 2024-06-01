@@ -20,7 +20,7 @@ def get_application() -> FastAPI:
         version=settings.VERSION,
         debug=settings.DEBUG,
         description=settings.DESCRIPTION,
-        # lifespan=lifespan,
+        lifespan=lifespan,
     )
 
     for router in get_routers():
