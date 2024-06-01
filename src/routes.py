@@ -5,6 +5,7 @@ from .controllers import (
     office_controllers,
     service_controllers,
     user_controllers,
+    tariff_controllers,
 )
 
 
@@ -14,4 +15,5 @@ def get_routers() -> list[APIRouter]:
         office_controllers.router,
         service_controllers.router,
         user_controllers.router,
+        tariff_controllers.router,
     ]

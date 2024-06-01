@@ -1,9 +1,9 @@
 from ..repositories.membership_repository import membership_repository
-from ..schemas.membership_schema import MembershipCreate, MembershipGet
+from ..schemas.membership_schema import MembershipCreateWithPeriod, MembershipGet
 from .base_service import BaseService
 
 class MembershipService(BaseService):
-    def create(self, data: MembershipCreate) -> MembershipGet:
+    def create(self, data: MembershipCreateWithPeriod) -> MembershipGet:
         return MembershipGet.model_validate(membership_repository.create(data=data))
 
     def get_all(

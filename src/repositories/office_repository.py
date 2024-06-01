@@ -1,8 +1,8 @@
 from sqlalchemy import select, update
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, subqueryload
 
 from ..config.db_config import session_factory
-from ..models.models import OfficeModel, ServiceModel, ServiceType
+from ..models.models import MembershipModel, OfficeModel, ServiceModel, ServiceType
 from ..schemas.office_schema import OfficeCreate, OfficeUpdate
 from .base_repository import BaseRepository
 
@@ -30,7 +30,7 @@ class OfficeRepository(BaseRepository):
                 .limit(limit)
                 .offset(offset)
                 .options(selectinload(OfficeModel.services))
-                .options(selectinload(OfficeModel.memberships))
+                .options(subqueryload(OfficeModel.memberships).subqueryload(MembershipModel.tariff))
             )
             offices = session.execute(query).scalars().all()
             return offices

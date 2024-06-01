@@ -1,9 +1,9 @@
 from typing import Sequence
 from sqlalchemy import select, update
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, subqueryload
 
 from ..config.db_config import session_factory
-from ..models.models import UserModel
+from ..models.models import MembershipModel, UserModel
 from ..schemas.user_schema import UserCreate, UserUpdate
 from .base_repository import BaseRepository
 
@@ -30,7 +30,7 @@ class UserRepository(BaseRepository):
                 .order_by(order)
                 .limit(limit)
                 .offset(offset)
-                .options(selectinload(UserModel.memberships))
+                .options(subqueryload(UserModel.memberships).subqueryload(MembershipModel.tariff))
             )
             users = session.execute(query).scalars().all()
             return users

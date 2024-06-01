@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 from ..services.membership_service import membership_service
-from ..schemas.membership_schema import MembershipCreate, MembershipGet
+from ..schemas.membership_schema import MembershipCreateWithPeriod, MembershipGet
 from ..schemas.status_schema import Status
 
 router = APIRouter(prefix="/memberships", tags=["memberships"])
@@ -18,7 +18,7 @@ def get_membership_by_id(pk: int) -> MembershipGet:
 
 
 @router.post("/create")
-def create_membership(data: MembershipCreate) -> MembershipGet:
+def create_membership(data: MembershipCreateWithPeriod) -> MembershipGet:
     return membership_service.create(data=data)
 
 

@@ -1,20 +1,28 @@
 from typing import Sequence
 from sqlalchemy import select, delete
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, selectinload
 
 from ..config.db_config import session_factory
-from ..models.models import MembershipModel
-from ..schemas.membership_schema import MembershipCreate
+from ..models.models import MembershipModel, TariffModel
+from ..schemas.membership_schema import MembershipCreateWithPeriod
 from .base_repository import BaseRepository
 
 
 class MembershipRepository(BaseRepository):
-    def create(self, data: MembershipCreate) -> MembershipModel:
+    def create(self, data: MembershipCreateWithPeriod) -> MembershipModel:
         with self._session_factory() as session:
-            membersip = MembershipModel(**data.model_dump())
+            query = select(TariffModel).filter_by(period=data.period)
+            tariff = session.execute(query).scalars().one()
+
+            membersip = MembershipModel(
+                **{key: value for key, value in data.model_dump().items() if key != "period"}, tariff_id=tariff.id
+            )
             session.add(membersip)
             session.commit()
             session.refresh(membersip)
+
+            tariff.memberships.append(membersip)
+
             return membersip
 
     def get_all(
@@ -31,6 +39,7 @@ class MembershipRepository(BaseRepository):
                 .offset(offset)
                 .options(joinedload(MembershipModel.user))
                 .options(joinedload(MembershipModel.office))
+                .options(selectinload(MembershipModel.tariff))
             )
             membersips = session.execute(query).scalars().all()
             return membersips
@@ -42,6 +51,7 @@ class MembershipRepository(BaseRepository):
                 .filter_by(**filters)
                 .options(joinedload(MembershipModel.user))
                 .options(joinedload(MembershipModel.office))
+                .options(selectinload(MembershipModel.tariff))
             )
             membersip = session.execute(query).unique().scalar_one()
             return membersip

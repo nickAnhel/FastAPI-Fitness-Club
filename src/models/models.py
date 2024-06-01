@@ -1,4 +1,5 @@
 import datetime
+from decimal import Decimal
 import enum
 from sqlalchemy import ForeignKey, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -87,14 +88,31 @@ class MembershipModel(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
+    tariff_id: Mapped[int] = mapped_column(ForeignKey("tariffs.id"))
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     office_id: Mapped[int] = mapped_column(ForeignKey("offices.id"))
-    user: Mapped["UserModel"] = relationship(  # type: ignore
+
+    tariff: Mapped["TariffModel"] = relationship(
         back_populates="memberships",
     )
-    office: Mapped["OfficeModel"] = relationship(  # type: ignore
+    user: Mapped["UserModel"] = relationship(
+        back_populates="memberships",
+    )
+    office: Mapped["OfficeModel"] = relationship(
         back_populates="memberships",
     )
 
     start_date: Mapped[datetime.datetime]
+
+
+class TariffModel(Base):
+    __tablename__ = "tariffs"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+
     period: Mapped[int]
+    price: Mapped[Decimal]
+
+    memberships: Mapped[list["MembershipModel"]] = relationship(
+        back_populates="tariff",
+    )

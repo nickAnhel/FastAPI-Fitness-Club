@@ -68,26 +68,36 @@ def add_services_offices():
         )
 
 
+# Create tariffs
+def create_tariffs():
+    periods = [30, 90, 180, 365]
+    for i in range(4):
+        data = {
+            "period": periods[i],
+            "price": random.randint(100, 1000),
+        }
+        print(requests.post("http://127.0.0.1:8080/tariffs/create", json=data).json())
+
+
 # Create memberships
 def create_memberships():
     for user_id in range(1, 11):
         office_id = random.randint(1, 5)
-        start_date = datetime.date.today() + datetime.timedelta(days=random.randint(0, 30))
+        start_date = datetime.date.today() + datetime.timedelta(days=random.randint(1, 30))
         data = {}
         data["user_id"] = user_id
         data["office_id"] = office_id
         data["start_date"] = str(start_date)
         data["period"] = random.choice([30, 90, 180, 365])
         # print(data)
-        print(
-            requests.post("http://127.0.0.1:8080/memberships/create", json=data).json()
-        )
+        print(requests.post("http://127.0.0.1:8080/memberships/create", json=data).json())
 
 
 if __name__ == "__main__":
-    clear_db()
+    # clear_db()
     create_services()
     create_users()
     create_offices()
     add_services_offices()
+    create_tariffs()
     create_memberships()
