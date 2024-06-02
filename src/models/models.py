@@ -102,7 +102,7 @@ class MembershipModel(Base):
         back_populates="memberships",
     )
 
-    start_date: Mapped[datetime.datetime]
+    start_date: Mapped[datetime.date]
 
 
 class TariffModel(Base):

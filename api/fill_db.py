@@ -42,7 +42,7 @@ def create_offices():
         data = {}
         data["address"] = office.address()
         data["phone_number"] = (
-            office.address().replace("+7", "8").replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+            office.phone_number().replace("+7", "8").replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
         )
         # print(data)
         print(requests.post("http://127.0.0.1:8080/offices/create", json=data).json())
