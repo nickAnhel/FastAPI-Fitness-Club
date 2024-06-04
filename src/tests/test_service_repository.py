@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from ..models.base_model import Base
 from ..models.models import ServiceType
 from ..repositories.service_repository import service_repository
-from ..schemas.service_schema import ServiceCreate
+from ..schemas.service_schemas import ServiceCreate
 
 
 @pytest.fixture

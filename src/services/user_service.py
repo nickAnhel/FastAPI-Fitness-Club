@@ -1,5 +1,5 @@
 from ..repositories.user_repository import user_repository
-from ..schemas.user_schema import UserCreate, UserGet, UserGetWithMemberships, UserUpdateEmail, UserUpdatePhoneNumber
+from ..schemas.user_schemas import UserCreate, UserGet, UserGetWithMemberships, UserUpdateEmail, UserUpdatePhoneNumber
 from .base_service import BaseService
 
 

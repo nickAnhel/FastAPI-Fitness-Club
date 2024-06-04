@@ -3,7 +3,7 @@ from sqlalchemy.orm import selectinload, subqueryload
 
 from ..config.db_config import session_factory
 from ..models.models import MembershipModel, OfficeModel, ServiceModel, ServiceType
-from ..schemas.office_schema import OfficeCreate, OfficeUpdate
+from ..schemas.office_schemas import OfficeCreate, OfficeUpdate
 from .base_repository import BaseRepository
 
 

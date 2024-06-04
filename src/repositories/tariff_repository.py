@@ -3,7 +3,7 @@ from sqlalchemy import select, update
 
 from ..config.db_config import session_factory
 from ..models.models import TariffModel
-from ..schemas.tariff_schema import TariffCreate
+from ..schemas.tariff_schemas import TariffCreate
 from .base_repository import BaseRepository
 
 

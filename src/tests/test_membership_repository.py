@@ -6,9 +6,9 @@ from ..models.base_model import Base
 from ..repositories.user_repository import user_repository
 from ..repositories.office_repository import office_repository
 from ..repositories.membership_repository import membership_repository
-from ..schemas.user_schema import UserCreate
-from ..schemas.office_schema import OfficeCreate
-from ..schemas.membership_schema import MembershipCreate
+from ..schemas.user_schemas import UserCreate
+from ..schemas.office_schemas import OfficeCreate
+from ..schemas.membership_schemas import MembershipCreate
 
 
 @pytest.fixture

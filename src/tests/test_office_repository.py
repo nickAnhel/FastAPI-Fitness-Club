@@ -5,8 +5,8 @@ from ..models.base_model import Base
 from ..models.models import ServiceType
 from ..repositories.office_repository import office_repository
 from ..repositories.service_repository import service_repository
-from ..schemas.office_schema import OfficeCreate, OfficeUpdatePhoneNumber
-from ..schemas.service_schema import ServiceCreate
+from ..schemas.office_schemas import OfficeCreate, OfficeUpdatePhoneNumber
+from ..schemas.service_schemas import ServiceCreate
 
 
 @pytest.fixture

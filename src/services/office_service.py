@@ -1,6 +1,6 @@
 from ..models.models import ServiceType
 from ..repositories.office_repository import office_repository
-from ..schemas.office_schema import OfficeCreate, OfficeGet, OfficeUpdatePhoneNumber, OfficeGetWithServices, OfficeGetWithAllRelations
+from ..schemas.office_schemas import OfficeCreate, OfficeGet, OfficeUpdatePhoneNumber, OfficeGetWithServices, OfficeGetWithAllRelations
 from .base_service import BaseService
 
 class OfficeService(BaseService):

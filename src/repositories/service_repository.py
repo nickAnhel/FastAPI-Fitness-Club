@@ -4,7 +4,7 @@ from sqlalchemy.orm import selectinload
 
 from ..config.db_config import session_factory
 from ..models.models import ServiceModel, ServiceType
-from ..schemas.service_schema import ServiceCreate
+from ..schemas.service_schemas import ServiceCreate
 from .base_repository import BaseRepository
 
 

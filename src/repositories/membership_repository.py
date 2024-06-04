@@ -4,7 +4,7 @@ from sqlalchemy.orm import joinedload, selectinload
 
 from ..config.db_config import session_factory
 from ..models.models import MembershipModel, TariffModel
-from ..schemas.membership_schema import MembershipCreateWithPeriod
+from ..schemas.membership_schemas import MembershipCreateWithPeriod
 from .base_repository import BaseRepository
 
 

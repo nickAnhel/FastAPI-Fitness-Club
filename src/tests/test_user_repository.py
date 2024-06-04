@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 
 from ..models.base_model import Base
 from ..repositories.user_repository import user_repository
-from ..schemas.user_schema import UserCreate, UserUpdateEmail, UserUpdatePhoneNumber
+from ..schemas.user_schemas import UserCreate, UserUpdateEmail, UserUpdatePhoneNumber
 
 
 @pytest.fixture

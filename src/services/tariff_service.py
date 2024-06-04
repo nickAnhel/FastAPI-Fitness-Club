@@ -1,5 +1,5 @@
 from ..repositories.tariff_repository import tariff_repository
-from ..schemas.tariff_schema import TariffCreate, TariffGet
+from ..schemas.tariff_schemas import TariffCreate, TariffGet
 from .base_service import BaseService
 
 

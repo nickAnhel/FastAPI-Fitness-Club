@@ -1,6 +1,6 @@
 from .base_schema import BaseChema
-from .service_schema import ServiceGet
-from .membership_schema import MembershipGet
+from .service_schemas import ServiceGet
+from .membership_schemas import MembershipGet
 
 
 class OfficeCreate(BaseChema):

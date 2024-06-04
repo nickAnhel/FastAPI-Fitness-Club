@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 from ..services.tariff_service import tariff_service
-from ..schemas.status_schema import Status
-from ..schemas.tariff_schema import TariffCreate, TariffGet
+from ..schemas.status_schemas import Status
+from ..schemas.tariff_schemas import TariffCreate, TariffGet
 
 
 router = APIRouter(prefix="/tariffs", tags=["tariffs"])

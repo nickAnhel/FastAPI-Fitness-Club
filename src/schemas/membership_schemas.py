@@ -1,7 +1,7 @@
 from pydantic import FutureDate
 
 from .base_schema import BaseChema
-from .tariff_schema import TariffGet, TariffPeriod
+from .tariff_schemas import TariffGet, TariffPeriod
 
 
 class MembershipCreate(BaseChema):

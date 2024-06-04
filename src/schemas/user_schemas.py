@@ -1,7 +1,7 @@
 from pydantic import Field
 
 from .base_schema import BaseChema
-from .membership_schema import MembershipGet
+from .membership_schemas import MembershipGet
 
 
 class UserCreate(BaseChema):

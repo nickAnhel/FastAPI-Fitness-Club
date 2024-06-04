@@ -4,7 +4,7 @@ from sqlalchemy.orm import selectinload, subqueryload
 
 from ..config.db_config import session_factory
 from ..models.models import MembershipModel, UserModel
-from ..schemas.user_schema import UserCreate, UserUpdate
+from ..schemas.user_schemas import UserCreate, UserUpdate
 from .base_repository import BaseRepository
 
 
