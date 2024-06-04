@@ -2,7 +2,7 @@ from typing import Sequence
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
 
-from ..config.db_config import session_factory
+from ..config.db_config import session_maker
 from ..models.models import ServiceModel, ServiceType
 from ..schemas.service_schemas import ServiceCreate
 from .base_repository import BaseRepository
@@ -55,4 +55,4 @@ class ServiceRepository(BaseRepository):
             session.commit()
 
 
-service_repository = ServiceRepository(session_factory)
+service_repository = ServiceRepository(session_maker)

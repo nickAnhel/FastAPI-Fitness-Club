@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 
 
 class BaseService(ABC):
-    @abstractmethod
     def create(self, data):
         raise NotImplementedError
 

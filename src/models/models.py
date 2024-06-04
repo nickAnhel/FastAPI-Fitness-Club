@@ -1,34 +1,10 @@
+import enum
 import datetime
 from decimal import Decimal
-import enum
-from sqlalchemy import ForeignKey, String, func
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base_model import Base
-
-
-class UserModel(Base):
-    __tablename__ = "users"
-
-    id: Mapped[int] = mapped_column(primary_key=True)
-
-    first_name: Mapped[str] = mapped_column(String(50))
-    last_name: Mapped[str] = mapped_column(String(50))
-    email: Mapped[str] = mapped_column(unique=True)
-    phone_number: Mapped[str | None]
-
-    memberships: Mapped[list["MembershipModel"]] = relationship(  # type: ignore
-        back_populates="user",
-        cascade="all, delete",
-    )
-
-    created_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=func.now(),  # type: ignore
-    )
-    updated_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=func.now(),  # type: ignore
-        server_onupdate=func.now(),  # type: ignore
-    )
 
 
 class ServiceType(enum.StrEnum):
@@ -95,7 +71,7 @@ class MembershipModel(Base):
     tariff: Mapped["TariffModel"] = relationship(
         back_populates="memberships",
     )
-    user: Mapped["UserModel"] = relationship(
+    user: Mapped["UserModel"] = relationship(  # type: ignore
         back_populates="memberships",
     )
     office: Mapped["OfficeModel"] = relationship(

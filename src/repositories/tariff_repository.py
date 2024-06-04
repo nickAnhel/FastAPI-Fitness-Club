@@ -1,7 +1,7 @@
 from typing import Sequence
 from sqlalchemy import select, update
 
-from ..config.db_config import session_factory
+from ..config.db_config import session_maker
 from ..models.models import TariffModel
 from ..schemas.tariff_schemas import TariffCreate
 from .base_repository import BaseRepository
@@ -49,4 +49,4 @@ class TariffRepository(BaseRepository):
             session.commit()
 
 
-tariff_repository = TariffRepository(session_factory)
+tariff_repository = TariffRepository(session_maker)

@@ -2,7 +2,7 @@ from typing import Sequence
 from sqlalchemy import select, delete
 from sqlalchemy.orm import joinedload, selectinload
 
-from ..config.db_config import session_factory
+from ..config.db_config import session_maker
 from ..models.models import MembershipModel, TariffModel
 from ..schemas.membership_schemas import MembershipCreateWithPeriod
 from .base_repository import BaseRepository
@@ -63,4 +63,4 @@ class MembershipRepository(BaseRepository):
             session.commit()
 
 
-membership_repository = MembershipRepository(session_factory)
+membership_repository = MembershipRepository(session_maker)

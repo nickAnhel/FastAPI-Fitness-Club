@@ -2,20 +2,21 @@ from typing import Sequence
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload, subqueryload
 
-from ..config.db_config import session_factory
-from ..models.models import MembershipModel, UserModel
-from ..schemas.user_schemas import UserCreate, UserUpdate
+from ..config.db_config import session_maker
+from ..models.models import MembershipModel
+from ..auth.models import UserModel
+from ..auth.schemas import UserUpdate
 from .base_repository import BaseRepository
 
 
 class UserRepository(BaseRepository):
-    def create(self, data: UserCreate) -> UserModel:
-        with self._session_factory() as session:
-            user = UserModel(**data.model_dump())
-            session.add(user)
-            session.commit()
-            session.refresh(user)
-            return user
+    # def create(self, data: UserCreate) -> UserModel:
+    #     with self._session_factory() as session:
+    #         user = UserModel(**data.model_dump())
+    #         session.add(user)
+    #         session.commit()
+    #         session.refresh(user)
+    #         return user
 
     def get_all(
         self,
@@ -56,4 +57,4 @@ class UserRepository(BaseRepository):
             session.commit()
 
 
-user_repository = UserRepository(session_factory)
+user_repository = UserRepository(session_maker)

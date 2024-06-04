@@ -6,7 +6,6 @@ class BaseRepository(ABC):
     def __init__(self, session_factory: sessionmaker[Session]) -> None:
         self._session_factory = session_factory
 
-    @abstractmethod
     def create(self, data):
         raise NotImplementedError
 

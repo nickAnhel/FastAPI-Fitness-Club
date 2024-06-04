@@ -1,3 +1,4 @@
+import uuid
 import datetime
 import random
 import requests
@@ -31,8 +32,12 @@ def create_users():
         data["phone_number"] = (
             phone_number.replace("+7", "8").replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
         )
+        data["is_active"] = True
+        data["is_superuser"] = False
+        data["is_verified"] = False
+        data["password"] = str(uuid.uuid4())
         # print(data)
-        print(requests.post("http://127.0.0.1:8080/users/create", json=data).json())
+        print(requests.post("http://127.0.0.1:8080/register", json=data).json())
 
 
 # Create offices
@@ -94,7 +99,7 @@ def create_memberships():
 
 
 if __name__ == "__main__":
-    # clear_db()
+    clear_db()
     create_services()
     create_users()
     create_offices()

@@ -1,7 +1,7 @@
 from sqlalchemy import select, update
 from sqlalchemy.orm import selectinload, subqueryload
 
-from ..config.db_config import session_factory
+from ..config.db_config import session_maker
 from ..models.models import MembershipModel, OfficeModel, ServiceModel, ServiceType
 from ..schemas.office_schemas import OfficeCreate, OfficeUpdate
 from .base_repository import BaseRepository
@@ -80,4 +80,4 @@ class OfficeRepository(BaseRepository):
             session.commit()
 
 
-office_repository = OfficeRepository(session_factory)
+office_repository = OfficeRepository(session_maker)
