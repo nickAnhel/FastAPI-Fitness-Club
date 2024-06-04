@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Office Detail
+{% endblock title %}
+
+{% block content %}
+    <h1 class="text-3xl">Office Detail</h1>
+    <hr class="mb-4 border-black">
+    <table class="border-collapse w-full">
+        <tr>
+            <td class="border border-black px-2 py-1">Address</td>
+            <td class="border border-black px-2 py-1">{{ office.address }}</td>
+        </tr>
+        <tr>
+            <td class="border border-black px-2 py-1">Phone number</td>
+            <td class="border border-black px-2 py-1">{{ office.phone_number }}</td>
+        </tr>
+        <tr>
+            <td class="border border-black px-2 py-1">Services</td>
+            <td class="border border-black px-2 py-1">
+                {% for service in office.services %}
+                    <span>
+                        {{ service.service_type }}{% if not loop.last %},{% endif %}
+                    </span>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+{% endblock content %}

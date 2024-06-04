@@ -7,6 +7,7 @@ from .controllers import (
     user_controllers,
     tariff_controllers,
 )
+from .pages.router import router as pages_router
 
 
 def get_routers() -> list[APIRouter]:
@@ -16,4 +17,5 @@ def get_routers() -> list[APIRouter]:
         service_controllers.router,
         user_controllers.router,
         tariff_controllers.router,
+        pages_router,
     ]

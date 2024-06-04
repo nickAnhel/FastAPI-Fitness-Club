@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Offics
+{% endblock title %}
+
+{% block content %}
+    <h1 class="text-3xl">Offices</h1>
+    <hr class="mb-5 border-black">
+    {% for office in offices %}
+        <a href="/pages/offices/{{ office.id }}">
+            <div class="mb-3 px-3 py-4 rounded bg-gray-100 shadow mx-auto">
+                <h2 class="text-2xl">Office</h2>
+                <div class="my-2">
+                    <p>{{ office.address }}</p>
+                    <p class="text-gray-500">{{ office.phone_number }}</p>
+                </div>
+                {% for service in office.services %}
+                    <span class="bg-gray-200 text-gray-800 text-xs font-medium mr-2 px-2.5 py-1 rounded">
+                        {{ service.service_type }}
+                    </span>
+                {% endfor %}
+            </div>
+        </a>
+    {% endfor %}
+    {% if not offices %}
+        <p>No offices</p>
+    {% endif %}
+{% endblock content %}

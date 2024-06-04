@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+<body>
+    <nav class="flex justify-between p-4 text-2xl bg-black text-white mb-4">
+        <ul class="flex">
+            <li>
+                <a href="/pages">Fitness Club</a>
+            </li>
+        </ul>
+    </nav>
+    <div id="content" class="p-8 pt-4 pb-4 align-middle w-3/4 mx-auto">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>
