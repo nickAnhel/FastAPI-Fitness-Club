@@ -41,7 +41,7 @@ class OfficeRepository(BaseRepository):
                 select(OfficeModel)
                 .filter_by(**filters)
                 .options(selectinload(OfficeModel.services))
-                .options(selectinload(OfficeModel.memberships))
+                .options(subqueryload(OfficeModel.memberships).subqueryload(MembershipModel.tariff))
             )
             office = session.execute(query).scalar_one()
             return office

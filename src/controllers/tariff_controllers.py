@@ -13,7 +13,7 @@ def get_tariffs(order: str = "id", limit: int = 100, offset: int = 0) -> list[Ta
     return tariff_service.get_all(order=order, limit=limit, offset=offset)
 
 
-@router.get("/service/{pk}")
+@router.get("/tariff/{pk}")
 def get_tariff_by_id(pk: int) -> TariffGet:
     return tariff_service.get_by_id(pk=pk)
 
