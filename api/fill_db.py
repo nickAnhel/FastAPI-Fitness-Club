@@ -1,4 +1,3 @@
-import uuid
 import datetime
 import random
 import requests
@@ -35,7 +34,7 @@ def create_users():
         data["is_active"] = True
         data["is_superuser"] = False
         data["is_verified"] = False
-        data["password"] = str(uuid.uuid4())
+        data["password"] = "1234"
         # print(data)
         print(requests.post("http://127.0.0.1:8080/register", json=data).json())
 

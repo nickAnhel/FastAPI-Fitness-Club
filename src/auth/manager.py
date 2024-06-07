@@ -8,7 +8,7 @@ from .models import UserModel, get_user_db
 SECRET = "SECRET"
 
 
-class UserManager(IntegerIDMixin, BaseUserManager[UserModel, int]):
+class UserManager(IntegerIDMixin, BaseUserManager[UserModel, int]):  # type: ignore
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
 

@@ -7,13 +7,25 @@
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
-    <nav class="flex justify-between p-4 text-2xl bg-black text-white mb-4">
+    <nav class="flex justify-between py-4 px-8 text-2xl bg-black text-white mb-4">
         <ul class="flex">
             <li>
-                <a href="/pages">Fitness Club</a>
+                <a href="/pages/">Fitness Club</a>
             </li>
         </ul>
+        <ul class="flex text-xl">
+            {% if user %}
+                <li>
+                    <a href="/pages/logout/">Log Out</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="/pages/login/">Log In</a>
+                </li>
+            {% endif %}
+        </ul>
     </nav>
+
     <div id="content" class="p-8 pt-4 pb-4 align-middle w-3/4 mx-auto">
         {% block content %}{% endblock content %}
     </div>
