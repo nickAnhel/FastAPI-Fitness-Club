@@ -1,3 +1,4 @@
+from fastapi import APIRouter
 from fastapi_users import FastAPIUsers
 
 from .models import UserModel
@@ -10,14 +11,14 @@ fastapi_users = FastAPIUsers[UserModel, int](  # type: ignore
     [auth_backend],
 )
 
-auth_router = fastapi_users.get_auth_router(auth_backend)
-auth_router.prefix = "/auth"
-auth_router.tags = ["auth"]
+router = APIRouter(prefix="/auth", tags=["auth"])
 
-register_router = fastapi_users.get_register_router(UserRead, UserCreate)
-register_router.prefix = "/auth"
-register_router.tags = ["auth"]
-
+router.include_router(
+    fastapi_users.get_auth_router(auth_backend)
+)
+router.include_router(
+    fastapi_users.get_register_router(UserRead, UserCreate)
+)
 
 current_user = fastapi_users.current_user()
 optional_current_user = fastapi_users.current_user(optional=True)
