@@ -1,3 +1,4 @@
+from datetime import date
 from pathlib import Path
 from fastapi import APIRouter, Request, Depends, Form
 from fastapi.security import OAuth2PasswordRequestForm
@@ -10,6 +11,9 @@ from ..auth.manager import get_user_manager
 from ..auth.config import auth_backend, get_jwt_strategy
 from ..auth.router import current_user, optional_current_user
 from ..controllers.office_controllers import get_offices, get_office_by_id
+from ..controllers.tariff_controllers import get_tariffs
+from ..services.membership_service import membership_service
+from ..schemas.membership_schemas import MembershipCreateWithPeriod
 from .forms import UserCreateForm
 
 
@@ -33,8 +37,8 @@ def get_offices_page(request: Request, offices=Depends(get_offices), user=Depend
 
 
 @router.get("/offices/{pk}")
-def get_office_page(request: Request, office=Depends(get_office_by_id), user=Depends(optional_current_user)):
-    return templates.TemplateResponse("office.html", {"request": request, "office": office, "user": user})
+def get_office_page(request: Request, office=Depends(get_office_by_id), tariffs=Depends(get_tariffs), user=Depends(optional_current_user)):
+    return templates.TemplateResponse("office.html", {"request": request, "office": office, "tariffs": tariffs, "user": user})
 
 
 @router.get("/register")
@@ -105,3 +109,28 @@ async def login(
 async def logout(request: Request, user=Depends(current_user)):
     response = await auth_backend.logout(get_jwt_strategy(), user, request.headers.get("fitness_club_auth"))  # type: ignore
     return RedirectResponse("/pages/login/", status_code=303, headers=response.headers)
+
+
+@router.get("/profile")
+def profile(request: Request, user=Depends(current_user)):
+    return templates.TemplateResponse("profile.html", {"request": request, "user": user})
+
+
+@router.post("/create-membership")
+def create_membership(
+    request: Request,
+    start_date: date = Form(...),
+    period: int = Form(...),
+    office_id: int = Form(...),
+    user=Depends(current_user)
+):
+    # print(start_date, period, office_id, user.id)
+    data = MembershipCreateWithPeriod(
+        user_id=user.id,
+        office_id=office_id,
+        start_date=start_date,
+        period=period,  # type: ignore
+    )
+
+    membership_service.create(data=data)
+    return RedirectResponse("/pages/profile/", status_code=303)

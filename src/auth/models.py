@@ -24,6 +24,7 @@ class UserModel(SQLAlchemyBaseUserTable[int], Base):
     memberships: Mapped[list["MembershipModel"]] = relationship(  # type: ignore
         back_populates="user",
         cascade="all, delete",
+        lazy="selectin",
     )
 
 

@@ -38,7 +38,11 @@ class UserRepository(BaseRepository):
 
     def get_single(self, **fiters) -> UserModel:
         with self._session_factory() as session:
-            query = select(UserModel).filter_by(**fiters).options(selectinload(UserModel.memberships))
+            query = (
+                select(UserModel)
+                .filter_by(**fiters)
+                .options(subqueryload(UserModel.memberships).subqueryload(MembershipModel.tariff))
+            )
             user = session.execute(query).scalar_one()
             return user
 

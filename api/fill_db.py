@@ -98,7 +98,7 @@ def create_memberships():
 
 
 if __name__ == "__main__":
-    clear_db()
+    # clear_db()
     create_services()
     create_users()
     create_offices()

@@ -70,6 +70,7 @@ class MembershipModel(Base):
 
     tariff: Mapped["TariffModel"] = relationship(
         back_populates="memberships",
+        lazy="selectin",
     )
     user: Mapped["UserModel"] = relationship(  # type: ignore
         back_populates="memberships",

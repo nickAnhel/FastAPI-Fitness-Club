@@ -6,3 +6,4 @@ requests==2.31.0
 faker==25.2.0
 pytest==8.2.0
 fastapi_users==13.0.0
+aiosqlite==0.20.0

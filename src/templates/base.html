@@ -16,11 +16,12 @@
         <ul class="flex text-xl">
             {% if user %}
                 <li>
-                    <a href="/pages/logout/">Log Out</a>
+                    <a href="/pages/profile/" class="mr-4 transition linear duration-300 hover:text-blue-500">Profile</a>
+                    <a href="/pages/logout/" class="transition linear duration-300 hover:text-blue-500">Log Out</a>
                 </li>
             {% else %}
                 <li>
-                    <a href="/pages/login/">Log In</a>
+                    <a href="/pages/login/" class="transition linear duration-300 hover:text-blue-500">Log In</a>
                 </li>
             {% endif %}
         </ul>
