@@ -1,5 +1,5 @@
 from fastapi_users import schemas
-from pydantic import Field
+from pydantic import Field, BaseModel
 
 from ..schemas.membership_schemas import MembershipGet
 
@@ -21,7 +21,7 @@ class UserCreate(schemas.BaseUserCreate):
     phone_number: str | None = Field(default=None, pattern=r"^[+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$")
 
 
-class UserUpdate(schemas.BaseUserUpdate):
+class UserUpdate(BaseModel):
     pass
 
 

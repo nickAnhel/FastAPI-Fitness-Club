@@ -36,7 +36,7 @@ def create_users():
         data["is_verified"] = False
         data["password"] = "1234"
         # print(data)
-        print(requests.post("http://127.0.0.1:8080/register", json=data).json())
+        print(requests.post("http://127.0.0.1:8080/auth/register", json=data).json())
 
 
 # Create offices

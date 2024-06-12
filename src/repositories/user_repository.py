@@ -1,6 +1,6 @@
 from typing import Sequence
 from sqlalchemy import select, update
-from sqlalchemy.orm import selectinload, subqueryload
+from sqlalchemy.orm import subqueryload
 
 from ..config.db_config import session_maker
 from ..models.models import MembershipModel

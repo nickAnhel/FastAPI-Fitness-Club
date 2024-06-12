@@ -1,9 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from ..services.office_service import office_service
 from ..schemas.office_schemas import OfficeCreate, OfficeGet, OfficeGetWithServices, OfficeGetWithAllRelations
 from ..schemas.status_schemas import Status
 from ..models.models import ServiceType
+from ..auth.router import current_superuser
 
 
 router = APIRouter(prefix="/offices", tags=["offices"])
@@ -25,21 +26,21 @@ def get_office_by_address(address: str) -> OfficeGetWithAllRelations:
 
 
 @router.post("/create")
-def create_office(data: OfficeCreate) -> OfficeGet:
+def create_office(data: OfficeCreate, user=Depends(current_superuser)) -> OfficeGet:
     return office_service.create(data=data)
 
 
 @router.put("/{pk}/change/phone-number")
-def change_office_phone_number(pk: int, phone_number: str) -> OfficeGet:
+def change_office_phone_number(pk: int, phone_number: str, user=Depends(current_superuser)) -> OfficeGet:
     return office_service.change_phone_number(pk=pk, phone_number=phone_number)
 
 
 @router.put("/{pk}/add-service")
-def add_service_to_office(pk: int, service_type: ServiceType) -> OfficeGetWithServices:
+def add_service_to_office(pk: int, service_type: ServiceType, user=Depends(current_superuser)) -> OfficeGetWithServices:
     return office_service.add_service_to_office(pk=pk, service_type=service_type)
 
 
 @router.delete("/{pk}/delete")
-def delete_office_by_id(pk: int) -> Status:
+def delete_office_by_id(pk: int, user=Depends(current_superuser)) -> Status:
     office_service.delete_by_id(pk=pk)
     return Status(code=200, message="Office deleted successfully")
