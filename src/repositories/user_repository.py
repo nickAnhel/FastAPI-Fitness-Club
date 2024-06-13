@@ -1,22 +1,23 @@
 from typing import Sequence
 from sqlalchemy import select, update
 from sqlalchemy.orm import subqueryload
+from argon2 import PasswordHasher
 
 from ..config.db_config import session_maker
 from ..models.models import MembershipModel
 from ..auth.models import UserModel
-from ..auth.schemas import UserUpdate
+from ..auth.schemas import UserUpdate, SuperUserCreate
 from .base_repository import BaseRepository
 
 
 class UserRepository(BaseRepository):
-    # def create(self, data: UserCreate) -> UserModel:
-    #     with self._session_factory() as session:
-    #         user = UserModel(**data.model_dump())
-    #         session.add(user)
-    #         session.commit()
-    #         session.refresh(user)
-    #         return user
+    def create_superuser(self, data: SuperUserCreate) -> UserModel:
+        with self._session_factory() as session:
+            user = UserModel(**data.model_dump())
+            session.add(user)
+            session.commit()
+            session.refresh(user)
+            return user
 
     def get_all(
         self,
@@ -62,3 +63,19 @@ class UserRepository(BaseRepository):
 
 
 user_repository = UserRepository(session_maker)
+password_hasher = PasswordHasher()
+
+
+def create_superuser() -> UserModel:
+    return user_repository.create_superuser(
+        data=SuperUserCreate(
+            email="admin@mail.com",
+            hashed_password=password_hasher.hash("admin"),
+            phone_number="+380000000000",
+            first_name="Admin",
+            last_name="Admin",
+            is_superuser=True,
+            is_active=True,
+            is_verified=True,
+        )
+    )

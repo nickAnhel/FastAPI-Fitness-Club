@@ -8,7 +8,7 @@ from .controllers import (
     tariff_controllers,
 )
 from .pages.router import router as pages_router
-from.auth.router import router as auth_router
+from .auth.router import router as auth_router
 
 
 def get_routers() -> list[APIRouter]:

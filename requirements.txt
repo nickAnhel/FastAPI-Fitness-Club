@@ -7,3 +7,7 @@ faker==25.2.0
 pytest==8.2.0
 fastapi_users==13.0.0
 aiosqlite==0.20.0
+flask==3.0.3
+flask-admin==1.6.1
+flask-login==0.6.3
+argon2

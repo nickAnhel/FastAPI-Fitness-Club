@@ -3,12 +3,13 @@ from fastapi import Depends
 from fastapi_users.db import SQLAlchemyBaseUserTable, SQLAlchemyUserDatabase
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship, Session
+from flask_login import UserMixin
 
 from ..models.base_model import Base
 from ..config.db_config import async_session_maker
 
 
-class UserModel(SQLAlchemyBaseUserTable[int], Base):
+class UserModel(SQLAlchemyBaseUserTable[int], Base, UserMixin):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)
